@@ -1,6 +1,7 @@
 # required imports
 from requests import get
 from bs4 import BeautifulSoup
+import pandas as pd
 import os
 
 def get_blog_articles (input):
@@ -21,8 +22,11 @@ def get_blog_articles (input):
         data = {'title': title, 'content': content.text}
         # append to the list of dictionaries
         output.append(data)
-    # return the list
-    return output
+
+        # convert output to df
+        df = pd.DataFrame(output)
+    # return the dataframe
+    return df
 
 
 def get_news_articles_for_one_category (category, url):
@@ -52,4 +56,6 @@ def get_news_articles(input):
     for key, value in input.items():
         temp_list = get_news_articles_for_one_category(key, value)
         final_output += temp_list
-    return final_output
+     # convert final output to df
+    df = pd.DataFrame(final_output)
+    return df
